@@ -25,3 +25,4 @@ go run ./cmd/main.go
 - Convert to CLI
 - Improve sharing SDP b/w sender and receiver
 - Removing hardcoding for the windows file system
+- Change pion/webrtc to v3
