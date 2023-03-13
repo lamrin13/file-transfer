@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -19,13 +18,13 @@ func SendFile(d io.Writer, path string) {
 	}
 
 	defer file.Close()
-	stat, _ := file.Stat()
-	d.Write([]byte("Size: " + strconv.Itoa(int(stat.Size()))))
+	// stat, _ := file.Stat()
+	// d.Write([]byte("Size: " + strconv.Itoa(int(stat.Size()))))
 	reader := bufio.NewReader(file)
 
 	buf := make([]byte, 65535)
 	sent := 0
-	since := time.Now()
+	// since := time.Now()
 	for {
 		n, err := reader.Read(buf)
 
@@ -35,7 +34,7 @@ func SendFile(d io.Writer, path string) {
 			}
 			break
 		}
-		fmt.Printf("\rSending %d KB", sent/1024)
+		fmt.Printf("\rSending %d KB ", sent/1024)
 		_, err = d.Write(buf[:n])
 		if err != nil {
 			fmt.Printf("Error %s", err)
@@ -43,8 +42,9 @@ func SendFile(d io.Writer, path string) {
 		sent += n
 
 	}
-	elapsed := time.Since(since).Seconds()
-	fmt.Printf("\nSent data in %f seconds at %.3f MBps", elapsed, float64(sent)/1024/1024/elapsed)
+	fmt.Printf("Done sending")
+	// elapsed := time.Since(since).Seconds()
+	// fmt.Printf("\nSent data in %f seconds at %.3f MBps", elapsed, float64(sent)/1024/1024/elapsed)
 }
 
 func WriteFile(d io.Reader, file *os.File) {
